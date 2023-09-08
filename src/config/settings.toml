@@ -2,23 +2,24 @@
 
 env = "prod"
 container_env = false
-
 log_level = "INFO"
-
 feed_url = "https://rpilocator.com/feed/"
+
+db_type = "sqlite"
+db_host = ""
+db_username = ""
+db_password = ""
+db_port = ""
+db_database = ".db/demo.sqlite"
 
 [dev]
 
 env = "dev"
-
 log_level = "DEBUG"
-
 test_var = "[Dev] Test Value"
-
 cache_conf = { directory = ".cache", timeout = 300 }
 
 [prod]
 
 test_var = "[Prod] Test Value"
-
 cache_conf = { directory = ".cache", timeout = 900 }
