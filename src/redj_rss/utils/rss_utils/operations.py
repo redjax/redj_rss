@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import random
 
 from typing import Union
@@ -9,9 +10,8 @@ from dependencies import check_cache_key_exists, get_val, set_val
 import diskcache
 import feedparser
 
+from loguru import logger as log
 import pendulum
-import json
-
 from red_utils.msgpack_utils import (
     default_serialize_dir,
     msgpack_deserialize,
@@ -19,9 +19,6 @@ from red_utils.msgpack_utils import (
     msgpack_serialize,
     msgpack_serialize_file,
 )
-
-from loguru import logger as log
-
 
 def serialize_feed_res(
     data: feedparser.FeedParserDict = None, name: str = None
@@ -50,7 +47,10 @@ def serialize_feed_res(
 
 
 def get_feed(
-    url: str = settings.FEED_URL, cache: diskcache.Cache = None, use_cache: bool = True
+    url: str = settings.FEED_URL,
+    cache: diskcache.Cache = None,
+    use_cache: bool = True,
+    cache_expire: int = settings.CACHE_CONF.timeout,
 ) -> feedparser.FeedParserDict:
     """Retrieve an RSS feed URL's contents."""
     if not url:
@@ -69,7 +69,9 @@ def get_feed(
                     log.debug("Cached: False")
                     _feed: feedparser.FeedParserDict = feedparser.parse(url)
 
-                    set_val(cache=client, key=url, val=_feed.copy())
+                    set_val(
+                        cache=client, key=url, val=_feed.copy(), expire=cache_expire
+                    )
                 else:
                     log.debug(f"Cache: True")
                     cached_feed = get_val(key=url, cache=client)

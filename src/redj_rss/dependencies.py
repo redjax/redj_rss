@@ -1,5 +1,14 @@
 from __future__ import annotations
 
+from constants import (
+    cache_conf,
+    DB_DATABASE,
+    DB_HOST,
+    DB_PASSWORD,
+    DB_PORT,
+    DB_TYPE,
+    DB_USERNAME,
+)
 import diskcache
 
 from loguru import logger as log
@@ -12,8 +21,46 @@ from red_utils.diskcache_utils import (
     set_expire,
     set_val,
 )
+from red_utils.sqlalchemy_utils import (
+    get_engine,
+    get_session,
+    saSQLiteConnection,
+    saPGConnection,
+    Base,
+    create_base_metadata,
+)
 
-from constants import cache_conf
+log.debug(f"Matching DB type to: {DB_TYPE}")
+match DB_TYPE:
+    case "sqlite":
+        log.debug("Detected SQLite DB")
+        db_config = saSQLiteConnection(database=DB_DATABASE)
+
+    case "postgres":
+        log.debug("Detected Postgres DB")
+        db_config = saPGConnection(
+            host=DB_HOST,
+            username=DB_USERNAME,
+            password=DB_PASSWORD,
+            port=DB_PORT,
+            database=DB_DATABASE,
+        )
+    case _:
+        raise ValueError(f"Unsupported DB_TYPE: {DB_TYPE}")
+
+engine = get_engine(connection=db_config, db_type=DB_TYPE, echo=True)
+SessionLocal = get_session(engine=engine, autoflush=True)
+
+
+def get_db():
+    db = SessionLocal()
+
+    try:
+        yield db
+    except Exception as exc:
+        raise Exception(f"Unhandled exception getting database session. Details: {exc}")
+    finally:
+        db.close()
 
 
 def get_cache(conf: dict = cache_conf) -> diskcache.Cache:
