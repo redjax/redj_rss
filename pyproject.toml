@@ -1,0 +1,77 @@
+
+[project]
+name = "redj-rss"
+version = "0.1.0"
+description = "RSS parser & notifier"
+authors = [{ name = "redjax", email = "none@none.com" }]
+dependencies = [
+    "feedparser>=6.0.10",
+    "pydantic>=2.3.0",
+    "sqlalchemy>=2.0.20",
+    "alembic>=1.12.0",
+    "stackprinter>=0.2.10",
+    "faker>=19.4.0",
+    "arrow>=1.2.3",
+    "polars[pyarrow]>=0.19.2",
+    "dynaconf>=3.2.2",
+    "loguru>=0.7.1",
+    "red-utils>=0.1.17",
+    "diskcache>=5.6.3",
+    "pendulum>=2.1.2",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = { text = "MIT" }
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm.dev-dependencies]
+dev = ["black>=23.7.0", "ruff>=0.0.287"]
+
+[tool.pdm.scripts]
+
+###############
+# Format/Lint #
+###############
+
+# Check only, don't fix
+check = { cmd = "black ." }
+# Check and fix
+format = { cmd = "ruff check . --fix" }
+
+########################
+# Start/Launch Scripts #
+########################
+
+#  Run main app or script. Launches from app/
+start = { shell = "cd src && pdm run python redj_rss" }
+
+###########
+# Alembic #
+###########
+
+## Create initial commit
+alembic-init = { cmd = "alembic revision -m 'Initial commit.'" }
+
+## Upgrade Alembic head after making model changes
+alembic-upgrade = { cmd = "alembic upgrade head" }
+
+## Run migrations
+#  Prompts for a commit message
+alembic-migrate = { shell = "read -p 'Commit message: ' commit_msg && pdm run alembic revision --autogenerate -m '${commit_msg}'" }
+
+## Run full migration, upgrade - commit - revision
+migrations = { shell = "pdm run alembic upgrade head && read -p 'Commit message: ' commit_msg && pdm run alembic revision --autogenerate -m '${commit_msg}'" }
+
+######################
+# Export Requirement #
+######################
+
+#  Export production requirements
+export = { cmd = "pdm export --prod -o requirements.txt --without-hashes" }
+#  Export only development requirements
+export-dev = { cmd = "pdm export -d -o requirements.dev.txt --without-hashes" }
+## Uncomment if/when using a CI group
+# export-ci = {cmd = "pdm export -G ci -o requirements.ci.txt --without-hashes"}
