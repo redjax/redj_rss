@@ -48,6 +48,8 @@ format = { cmd = "ruff check . --fix" }
 #  Run main app or script. Launches from app/
 start = { shell = "cd src && pdm run python redj_rss" }
 
+start-dev = { shell = "cd src && pdm run python redj_rss", env = { ENV_FOR_DYNACONF = "dev"} }
+
 ###########
 # Alembic #
 ###########
