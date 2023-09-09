@@ -1,24 +1,23 @@
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 from datetime import date, datetime
 from time import mktime, struct_time
 from typing import Any, Optional, Union
 import uuid
 
-import pendulum
 import feedparser
+import pendulum
 
 from pydantic import BaseModel, Field, ValidationError, validator
 
 
 class FeedEntryBase(BaseModel):
-    title: str | None = field(default=None)
-    link: str | None = field(default=None)
-    author: str | None = field(default=None)
-    entry_id: str | None = field(default=None)
-    image: dict | None = field(default=None)
-    categories: list | None = field(default=None)
+    title: str | None = Field(default=None)
+    link: str | None = Field(default=None)
+    author: str | None = Field(default=None)
+    entry_id: str | None = Field(default=None)
+    image: dict | None = Field(default=None)
+    categories: list | None = Field(default=None)
 
     @property
     def has_title(self) -> bool:
@@ -53,35 +52,4 @@ class FeedEntryBase(BaseModel):
 
 
 class FeedEntry(FeedEntryBase):
-    published_parsed: struct_time | None = field(default=None)
-
-
-class RPILocatorEntry(FeedEntryBase):
-    title_detail: dict | None = field(default=None)
-    summary: str | None = field(default=None)
-    summary_detail: dict | None = field(default=None)
-    links: list[dict] | None = field(default=None)
-    link: str | None = field(default=None)
-    tags: list[dict] | None = field(default=None)
-    id: str | None = field(default=None)
-    guidislink: bool = field(default=False)
-    published: datetime | None = field(default=None)
-
-    @property
-    def is_in_stock(self) -> bool:
-        return [True if "is In Stock at" in self.title else False]
-
-    @validator("published", pre=True)
-    def validatae_published(cls, v) -> datetime:
-        """Convert the published timestamp string to a datetime.
-
-        An entry's format is: "ddd, DD MMM YYYY HH:mm:ss z". Uses pendulum
-        for formatting:
-
-        https://pendulum.eustace.io/docs/#tokens
-        """
-        ##
-        published_fmt: str = "ddd, DD MMM YYYY HH:mm:ss z"
-        dt = pendulum.from_format(v, fmt=published_fmt)
-
-        return dt
+    published_parsed: struct_time | None = Field(default=None)

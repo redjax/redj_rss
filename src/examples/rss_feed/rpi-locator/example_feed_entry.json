@@ -1,0 +1,55 @@
+{
+    "title": "Stock Alert (DE): RPi CM4 - 2GB RAM, No MMC, With Wifi is In Stock at pi3g",
+    "title_detail": {
+        "type": "text/plain",
+        "language": null,
+        "base": "https://rpilocator.com/feed/",
+        "value": "Stock Alert (DE): RPi CM4 - 2GB RAM, No MMC, With Wifi is In Stock at pi3g"
+    },
+    "summary": "Stock Alert (DE): RPi CM4 - 2GB RAM, No MMC, With Wifi is In Stock at pi3g",
+    "summary_detail": {
+        "type": "text/html",
+        "language": null,
+        "base": "https://rpilocator.com/feed/",
+        "value": "Stock Alert (DE): RPi CM4 - 2GB RAM, No MMC, With Wifi is In Stock at pi3g"
+    },
+    "links": [
+        {
+            "rel": "alternate",
+            "type": "text/html",
+            "href": "https://rpilocator.com?vendor=pi3g&utm_source=feed&utm_medium=rss"
+        }
+    ],
+    "link": "https://rpilocator.com?vendor=pi3g&utm_source=feed&utm_medium=rss",
+    "tags": [
+        {
+            "term": "pi3g",
+            "scheme": null,
+            "label": null
+        },
+        {
+            "term": "DE",
+            "scheme": null,
+            "label": null
+        },
+        {
+            "term": "CM4",
+            "scheme": null,
+            "label": null
+        }
+    ],
+    "id": "CE2C6FB9-077C-495B-AD8F44C56814B09D",
+    "guidislink": false,
+    "published": "Thu, 07 Sep 2023 12:42:57 GMT",
+    "published_parsed": [
+        2023,
+        9,
+        7,
+        12,
+        42,
+        57,
+        3,
+        250,
+        0
+    ]
+}
