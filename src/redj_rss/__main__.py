@@ -83,6 +83,8 @@ def parse_entries_to_objs(entries: list[dict] = []) -> list[RPILocatorEntry]:
 if __name__ == "__main__":
     log.info(f"[env:{ENV}|container:{CONTAINER_ENV}] Feed URL: {FEED_URL}")
 
+    SessionLocal = get_db()
+
     ## Create a diskcache to avoid being rate limited.
     cache = get_cache()
 
@@ -121,6 +123,9 @@ if __name__ == "__main__":
 
         if "published" in entry.keys():
             schema_dict["published"] = entry.published
+
+        if "summary" in entry.keys():
+            schema_dict["summary"] = entry.summary
 
         _entry: RPILocatorEntry = RPILocatorEntry(**schema_dict)
 
