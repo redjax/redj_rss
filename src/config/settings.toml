@@ -1,3 +1,6 @@
+## Import settings from fastapi_settings.toml file
+extends = ["fastapi.toml"]
+
 [default]
 
 env = "prod"
