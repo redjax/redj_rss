@@ -1,13 +1,13 @@
 from __future__ import annotations
 
 from constants import (
-    cache_conf,
     DB_DATABASE,
     DB_HOST,
     DB_PASSWORD,
     DB_PORT,
     DB_TYPE,
     DB_USERNAME,
+    cache_conf,
 )
 import diskcache
 
@@ -22,12 +22,12 @@ from red_utils.diskcache_utils import (
     set_val,
 )
 from red_utils.sqlalchemy_utils import (
-    get_engine,
-    get_session,
-    saSQLiteConnection,
-    saPGConnection,
     Base,
     create_base_metadata,
+    get_engine,
+    get_session,
+    saPGConnection,
+    saSQLiteConnection,
 )
 
 log.debug(f"Matching DB type to: {DB_TYPE}")
