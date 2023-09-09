@@ -11,12 +11,8 @@ import diskcache
 import feedparser
 
 from loguru import logger as log
-import pendulum
-
-import json
-
 import msgpack
-
+import pendulum
 from red_utils.msgpack_utils import (
     default_serialize_dir,
     msgpack_deserialize,
@@ -24,7 +20,6 @@ from red_utils.msgpack_utils import (
     msgpack_serialize,
     msgpack_serialize_file,
 )
-
 
 def serialize_feed_res(
     data: feedparser.FeedParserDict = None, name: str = None

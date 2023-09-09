@@ -1,12 +1,12 @@
 from __future__ import annotations
 
-from .schemas import FeedEntry
 from .rpi_locator import (
     RPILocatorEntry,
-    RPILocatorEntryUpdate,
     RPILocatorEntryCreate,
+    RPILocatorEntryModel,
+    RPILocatorEntryUpdate,
     RPILocatorFieldDetail,
     RPILocatorLink,
     RPILocatorTag,
-    RPILocatorEntryModel,
 )
+from .schemas import FeedEntry

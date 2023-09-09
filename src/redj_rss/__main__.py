@@ -7,6 +7,7 @@ stackprinter.set_excepthook(style="darkbg2")
 from pathlib import Path
 import random
 import sys
+
 import msgpack
 
 ## Appends the src/ dir at ../ to Python's path
@@ -14,20 +15,23 @@ import msgpack
 sys.path.append(".")
 
 import json
+
 from typing import Union
 
 from constants import CONTAINER_ENV, ENV, FEED_URL
 from dependencies import (
+    Base,
+    cache_conf,
     check_cache_key_exists,
+    create_base_metadata,
+    default_cache_conf,
+    engine,
     get_cache,
+    get_db,
     get_val,
     set_expire,
     set_val,
-    get_db,
-    create_base_metadata,
 )
-from dependencies import cache_conf, default_cache_conf, Base, engine
-
 from domain.rss import FeedEntry, RPILocatorEntry, RPILocatorEntryModel, rpi_locator
 from dynaconf import settings
 import feedparser
