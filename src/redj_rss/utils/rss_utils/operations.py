@@ -12,6 +12,11 @@ import feedparser
 
 from loguru import logger as log
 import pendulum
+
+import json
+
+import msgpack
+
 from red_utils.msgpack_utils import (
     default_serialize_dir,
     msgpack_deserialize,
@@ -25,10 +30,14 @@ def serialize_feed_res(
     data: feedparser.FeedParserDict = None, name: str = None
 ) -> dict:
     try:
-        _data = {}
+        # _data = {}
 
-        for k, v in data.items():
-            _data[k] = v
+        # for k, v in data.items():
+        #     _data[k] = v
+
+        _data_dict = dict(data)
+
+        _data = msgpack.packb(_data_dict)
 
     except Exception as exc:
         log.error(
@@ -42,7 +51,9 @@ def serialize_feed_res(
     ts = pendulum.now().format("YY-MM-DD_HH:mm")
     filename: str = f"{ts}_{name}"
 
-    _ser = msgpack_serialize_file(_json=_data, filename=filename)
+    _ser = msgpack_serialize_file(
+        output_dir=".serialize/feed/rpi-locator", _json=_data, filename=filename
+    )
 
     return _ser
 
