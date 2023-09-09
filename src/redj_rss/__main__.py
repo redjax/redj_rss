@@ -23,7 +23,7 @@ from dependencies import (
 )
 from dependencies import cache_conf, default_cache_conf, Base, engine
 
-from domain.rss import FeedEntry, RPILocatorEntry, RPILocatorEntryModel
+from domain.rss import FeedEntry, RPILocatorEntry, RPILocatorEntryModel, rpi_locator
 from dynaconf import settings
 import feedparser
 
@@ -85,5 +85,37 @@ if __name__ == "__main__":
 
     rand_entry_dict = select_random_entry(_feed.entries)
 
-    entries = parse_entries_to_objs(entries=_feed.entries)
-    log.debug(f"Converted [{len(entries)}] objects to RPILocatorEntry class.")
+    # entries = parse_entries_to_objs(entries=_feed.entries)
+    # log.debug(f"Converted [{len(entries)}] objects to RPILocatorEntry class.")
+
+    entries: list[RPILocatorEntry] = []
+
+    for entry in _feed.entries:
+        log.debug(f"Entry keys: {entry.keys()}")
+
+        schema_dict = {
+            "link": entry.link or None,
+        }
+
+        if "title" in entry.keys():
+            schema_dict["title"] = entry.title
+
+        if "author" in entry.keys():
+            schema_dict["author"] = entry.author
+
+        if "link" in entry.keys():
+            schema_dict["link"] = entry.link
+
+        if "id" in entry.keys():
+            schema_dict["entry_id"] = entry.id
+
+        if "published" in entry.keys():
+            schema_dict["published"] = entry.published
+
+        _entry: RPILocatorEntry = RPILocatorEntry(**schema_dict)
+
+        entries.append(_entry)
+
+    for entry in entries:
+        log.debug(f"Writing entry [{entry.title}] to database.")
+        to_db = rpi_locator.crud.create(entry, db=get_db())

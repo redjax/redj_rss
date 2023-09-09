@@ -7,3 +7,5 @@ from .schemas import (
     RPILocatorEntryUpdate,
 )
 from .models import RPILocatorEntryModel
+
+from . import crud

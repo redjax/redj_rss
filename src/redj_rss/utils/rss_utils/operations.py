@@ -20,6 +20,7 @@ from red_utils.msgpack_utils import (
     msgpack_serialize_file,
 )
 
+
 def serialize_feed_res(
     data: feedparser.FeedParserDict = None, name: str = None
 ) -> dict:
@@ -82,8 +83,8 @@ def get_feed(
             log.debug("Cached: False")
             _feed: feedparser.FeedParserDict = feedparser.parse(url)
 
-        serialize = serialize_feed_res(data=_feed, name=_feed.feed.title)
-        log.debug(f"Serialized: {serialize}")
+        # serialize = serialize_feed_res(data=_feed, name=_feed.feed.title)
+        # log.debug(f"Serialized: {serialize}")
 
         return _feed
 

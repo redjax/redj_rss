@@ -55,12 +55,14 @@ SessionLocal = get_session(engine=engine, autoflush=True)
 def get_db():
     db = SessionLocal()
 
-    try:
-        yield db
-    except Exception as exc:
-        raise Exception(f"Unhandled exception getting database session. Details: {exc}")
-    finally:
-        db.close()
+    # try:
+    #     yield db
+    # except Exception as exc:
+    #     raise Exception(f"Unhandled exception getting database session. Details: {exc}")
+    # finally:
+    #     db.close()
+
+    return db
 
 
 def get_cache(conf: dict = cache_conf) -> diskcache.Cache:

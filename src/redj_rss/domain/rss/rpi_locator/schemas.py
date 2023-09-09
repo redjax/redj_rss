@@ -34,16 +34,16 @@ class RPILocatorTag(BaseModel):
 
 class RPILocatorEntryBase(FeedEntryBase):
     # title_detail: dict | None = Field(default=None)
-    title_detail: RPILocatorFieldDetail | None
+    title_detail: RPILocatorFieldDetail | None = Field(default=None)
     summary: str | None = Field(default=None)
     # summary_detail: dict | None = Field(default=None)
-    summary_detail: RPILocatorFieldDetail | None
+    summary_detail: RPILocatorFieldDetail | None = Field(default=None)
     # links: list[dict] | None = Field(default=None)
-    links: list[RPILocatorLink] | None
+    links: list[RPILocatorLink] | None = Field(default=None)
     link: str | None = Field(default=None)
     # tags: list[dict] | None = Field(default=None)
-    tags: list[RPILocatorTag] | None
-    id: str | None = Field(default=None)
+    tags: list[RPILocatorTag] | None = Field(default=None)
+    entry_id: str | None = Field(default=None, alias="id")
     guidislink: bool = Field(default=False)
     published: datetime | None = Field(default=None)
 
@@ -65,6 +65,9 @@ class RPILocatorEntryBase(FeedEntryBase):
         dt = pendulum.from_format(v, fmt=published_fmt)
 
         return dt
+
+    class Meta:
+        orm_model = "RPILocatorEntryModel"
 
 
 class RPILocatorEntryCreate(RPILocatorEntryBase):
