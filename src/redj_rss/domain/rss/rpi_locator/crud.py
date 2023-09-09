@@ -1,15 +1,14 @@
+from __future__ import annotations
+
 import uuid
 
-from .schemas import RPILocatorEntry, RPILocatorEntryCreate
 from .models import RPILocatorEntryModel
-
-from sqlalchemy.orm import Session, Query
-from sqlalchemy import func, select
-
-from loguru import logger as log
+from .schemas import RPILocatorEntry, RPILocatorEntryCreate
 
 from lib.parse_pydantic_schema import parse_pydantic_schema
-
+from loguru import logger as log
+from sqlalchemy import func, select
+from sqlalchemy.orm import Query, Session
 
 def validate_db(db: Session = None) -> Session:
     if not db:

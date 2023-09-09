@@ -10,7 +10,6 @@ import pendulum
 
 from pydantic import BaseModel, Field, ValidationError, validator
 
-
 class FeedEntryBase(BaseModel):
     title: str | None = Field(default=None)
     link: str | None = Field(default=None)

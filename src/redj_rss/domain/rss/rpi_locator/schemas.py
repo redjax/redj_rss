@@ -5,13 +5,12 @@ from time import mktime, struct_time
 from typing import Any, Optional, Union
 import uuid
 
+from ..schemas import FeedEntryBase
+
 import feedparser
 import pendulum
 
 from pydantic import BaseModel, Field, ValidationError, validator
-
-from ..schemas import FeedEntryBase
-
 
 class RPILocatorFieldDetail(BaseModel):
     type: str | None = Field(default="text/plain")

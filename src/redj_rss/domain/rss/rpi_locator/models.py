@@ -1,23 +1,19 @@
-from typing import Any, Optional, List
+from __future__ import annotations
 
+from datetime import date, datetime, timedelta
+from decimal import Decimal
+from typing import Any, List, Optional
 import uuid
 
-from datetime import datetime, date, timedelta
-
+from loguru import logger as log
 from red_utils.sqlalchemy_utils import Base
 from red_utils.sqlalchemy_utils.custom_types import CompatibleUUID
-
 import sqlalchemy as sa
+
+from sqlalchemy import Column, ForeignKey, Table
 import sqlalchemy.orm as sa_orm
+from sqlalchemy.orm import Mapped, Session, mapped_column, relationship
 from sqlalchemy.sql import func
-
-from sqlalchemy.orm import Session, Mapped, mapped_column, relationship
-from sqlalchemy import ForeignKey, Table, Column
-
-from decimal import Decimal
-
-from loguru import logger as log
-
 
 class RPILocatorEntryModel(Base):
     __tablename__ = "rpilocator"
