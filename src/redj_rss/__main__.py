@@ -1,7 +1,13 @@
 from __future__ import annotations
 
+import json
 import random
 import sys
+import msgpack
+
+## Appends the src/ dir at ../ to Python's path
+#  Allows accessing files in i.e. ../.serialize
+sys.path.append(".")
 
 from typing import Union
 
@@ -53,6 +59,7 @@ if __name__ == "__main__":
     ## Get feed results. If previous results exist in cache,
     #  use those. Pass USE_CACHE=False to disable cache check.
     _feed = get_feed(cache=cache, use_cache=True)
+    # log.debug(f"Feed: ({type(dict(_feed))}): {_feed}")
 
     log.info(f"Found ({len(_feed.entries)}) entries")
 
