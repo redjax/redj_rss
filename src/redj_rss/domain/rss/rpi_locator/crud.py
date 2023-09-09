@@ -5,7 +5,7 @@ import uuid
 from .models import RPILocatorEntryModel
 from .schemas import RPILocatorEntry, RPILocatorEntryCreate
 
-from lib.parse_pydantic_schema import parse_pydantic_schema
+from lib.parse_pydantic_schema import parse_schema
 from loguru import logger as log
 from sqlalchemy import func, select
 from sqlalchemy.orm import Query, Session
@@ -27,7 +27,7 @@ def create(
 ) -> RPILocatorEntryModel:
     validate_db(db)
 
-    log.debug(f"Create obj: ({type(obj)}): {obj}")
+    # log.debug(f"Create obj: ({type(obj)}): {obj}")
 
     try:
         with db as sess:
@@ -36,21 +36,21 @@ def create(
             db_obj_sel = select(RPILocatorEntryModel).where(
                 RPILocatorEntryModel.title == obj.title
             )
-            log.info(f"Checking for existence of {obj.title} in database")
+            # log.info(f"Checking for existence of {obj.title} in database")
             db_obj = sess.execute(db_obj_sel).first()
 
-            log.debug(f"Results ({type(db_obj)}): {db_obj}")
+            # log.debug(f"Results ({type(db_obj)}): {db_obj}")
 
             if db_obj:
-                log.info(f"Found object in database. Returning instead of committing.")
+                # log.info(f"Found object in database. Returning instead of committing.")
                 return db_obj
             else:
-                log.info(
-                    f"Did not find object in database. Committing object to database."
-                )
+                # log.info(
+                # f"Did not find object in database. Committing object to database."
+                # )
 
                 log.debug("Dumping schema to dict")
-                dump_schema: dict = parse_pydantic_schema(schema=obj)
+                dump_schema: dict = parse_schema(schema=obj)
                 new_obj: RPILocatorEntryModel = RPILocatorEntryModel(
                     title=dump_schema["title"],
                     author=dump_schema["author"],
