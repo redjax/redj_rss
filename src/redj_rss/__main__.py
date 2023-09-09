@@ -103,7 +103,7 @@ if __name__ == "__main__":
     entries: list[RPILocatorEntry] = []
 
     for entry in _feed.entries:
-        log.debug(f"Entry keys: {entry.keys()}")
+        # log.debug(f"Entry keys: {entry.keys()}")
 
         schema_dict = {
             "link": entry.link or None,
@@ -132,7 +132,7 @@ if __name__ == "__main__":
         entries.append(_entry)
 
     for entry in entries:
-        log.debug(f"Writing entry [{entry.title}] to database.")
+        # log.debug(f"Writing entry [{entry.title}] to database.")
         to_db = rpi_locator.crud.create(entry, db=SessionLocal)
 
     # del_all = rpi_locator.crud.delete_all(db=SessionLocal)

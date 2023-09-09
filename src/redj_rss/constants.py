@@ -14,4 +14,8 @@ DB_PORT: int | None = settings.DB_PORT or None
 DB_DATABASE: str | None = settings.DB_DATABASE or None
 
 # cache_conf: dict = settings.CACHE_CONF or {"directory": ".cache", "timeout": 900}
-cache_conf = {"directory": ".cache", "timeout": 300}
+cache_conf = {
+    "directory": ".cache",
+    "timeout": settings.CACHE_CONF.timeout,
+    "expire": settings.CACHE_CONF.expire,
+}
