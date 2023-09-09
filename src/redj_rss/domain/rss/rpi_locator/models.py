@@ -15,6 +15,7 @@ import sqlalchemy.orm as sa_orm
 from sqlalchemy.orm import Mapped, Session, mapped_column, relationship
 from sqlalchemy.sql import func
 
+
 class RPILocatorEntryModel(Base):
     __tablename__ = "rpilocator"
 
@@ -24,8 +25,9 @@ class RPILocatorEntryModel(Base):
         primary_key=True, index=True, insert_default=uuid.uuid4
     )
 
-    title: Mapped[str | None] = mapped_column(sa.String, index=True, nullable=True)
-    link: Mapped[str | None] = mapped_column(sa.String, nullable=True)
-    author: Mapped[str | None] = mapped_column(sa.String, index=True, nullable=True)
-    entry_id: Mapped[str | None] = mapped_column(sa.String, nullable=True)
     published: Mapped[datetime | None] = mapped_column(sa.DateTime)
+    entry_id: Mapped[str | None] = mapped_column(sa.String, nullable=True)
+    title: Mapped[str | None] = mapped_column(sa.String, index=True, nullable=True)
+    summary: Mapped[str | None] = mapped_column(sa.String, nullable=True)
+    author: Mapped[str | None] = mapped_column(sa.String, index=True, nullable=True)
+    link: Mapped[str | None] = mapped_column(sa.String, nullable=True)
