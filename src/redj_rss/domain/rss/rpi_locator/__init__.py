@@ -9,4 +9,5 @@ from .schemas import (
     RPILocatorFieldDetail,
     RPILocatorLink,
     RPILocatorTag,
+    RPILocatorFieldDetailCreate,
 )
