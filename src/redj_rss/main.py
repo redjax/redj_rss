@@ -1,31 +1,19 @@
 from __future__ import annotations
 
-from pathlib import Path
-import random
 import sys
 
 sys.path.append(".")
 
+from sqlalchemy.orm import Session
+
 from constants import CONTAINER_ENV, ENV, FEED_URL
-from dependencies import (
-    Base,
-    cache_conf,
-    check_cache_key_exists,
-    create_base_metadata,
-    default_cache_conf,
-    engine,
-    get_cache,
-    get_db,
-    get_val,
-    set_expire,
-    set_val,
-)
-from domain.rss import FeedEntry, RPILocatorEntry, RPILocatorEntryModel, rpi_locator
+from dependencies import Base, create_base_metadata, engine, get_cache, get_db
+from domain.rss import RPILocatorEntry, rpi_locator
 from dynaconf import settings
 import feedparser
 
 from loguru import logger as log
-from red_utils.loguru_utils import default_color_fmt, init_logger
+from red_utils.loguru_utils import default_color_fmt
 from utils.rss_utils import get_feed, select_random_entry
 
 loguru_console_sink: dict = {
@@ -68,7 +56,7 @@ def parse_entries_to_objs(_feed: RPILocatorEntry = None) -> list[RPILocatorEntry
     return entries
 
 
-def app():
+def app(db: Session = get_db()):
     SessionLocal = get_db()
 
     ## Create a diskcache to avoid being rate limited.
