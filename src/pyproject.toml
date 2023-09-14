@@ -36,6 +36,8 @@ dev = ["black>=23.7.0", "ruff>=0.0.287"]
 # Format/Lint #
 ###############
 
+# Run black & ruff
+lint = { shell = "pdm run black . && pdm run ruff check . --fix" }
 # Check only, don't fix
 check = { cmd = "black ." }
 # Check and fix

@@ -1,0 +1,25 @@
+
+[project]
+name = ""
+version = ""
+description = ""
+authors = [{ name = "redjax", email = "none@none.com" }]
+dependencies = []
+requires-python = ">=3.11"
+license = { text = "MIT" }
+
+[tool.pdm.dev-dependencies]
+dev = ["black>=23.9.1", "ruff>=0.0.289"]
+
+[tool.pdm.scripts]
+
+###############
+# Format/Lint #
+###############
+
+# Run black & ruff
+lint = { shell = "pdm run black . && pdm run ruff check . --fix" }
+# Check only, don't fix
+check = { cmd = "black ." }
+# Check and fix
+format = { cmd = "ruff check . --fix" }

@@ -19,9 +19,7 @@ import json
 from typing import Union
 
 from loguru import logger as log
-
 from main import app
-
 
 if __name__ == "__main__":
     app()

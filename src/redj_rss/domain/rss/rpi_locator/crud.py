@@ -10,7 +10,6 @@ from loguru import logger as log
 from sqlalchemy import func, select
 from sqlalchemy.orm import Query, Session
 
-
 def validate_db(db: Session = None) -> Session:
     if not db:
         raise ValueError("Missing DB Session object")
