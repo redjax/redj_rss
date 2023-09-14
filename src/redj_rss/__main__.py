@@ -127,6 +127,10 @@ if __name__ == "__main__":
         if "summary" in entry.keys():
             schema_dict["summary"] = entry.summary
 
+        if "title_detail" in entry.keys():
+            log.debug(f"Entry detail: {entry.title_detail}")
+            schema_dict["title_detail"] = entry.title_detail
+
         _entry: RPILocatorEntry = RPILocatorEntry(**schema_dict)
 
         entries.append(_entry)

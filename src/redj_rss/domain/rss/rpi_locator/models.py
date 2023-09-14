@@ -16,14 +16,21 @@ from sqlalchemy.orm import Mapped, Session, mapped_column, relationship
 from sqlalchemy.sql import func
 
 
-class RPILocatorEntryModel(Base):
-    __tablename__ = "rpilocator"
-
-    type_annotation_map = {uuid.UUID: CompatibleUUID}
-
+class UUIDMixin:
     id: Mapped[uuid.UUID] = mapped_column(
         primary_key=True, index=True, insert_default=uuid.uuid4
     )
+
+
+class RPILocatorEntryModelBase(Base, UUIDMixin):
+    __abstract__ = True
+    __tablename__ = "rpiLocator"
+
+    type_annotation_map = {uuid.UUID: CompatibleUUID}
+
+    # id: Mapped[uuid.UUID] = mapped_column(
+    #     primary_key=True, index=True, insert_default=uuid.uuid4
+    # )
 
     published: Mapped[datetime | None] = mapped_column(sa.DateTime)
     entry_id: Mapped[str | None] = mapped_column(sa.String, nullable=True)
@@ -31,3 +38,56 @@ class RPILocatorEntryModel(Base):
     summary: Mapped[str | None] = mapped_column(sa.String, nullable=True)
     author: Mapped[str | None] = mapped_column(sa.String, index=True, nullable=True)
     link: Mapped[str | None] = mapped_column(sa.String, nullable=True)
+
+
+class RPILocatorEntryModel(RPILocatorEntryModelBase):
+    # __tablename__ = "rpiLocator"
+
+    # type_annotation_map = {uuid.UUID: CompatibleUUID}
+
+    # id: Mapped[uuid.UUID] = mapped_column(
+    #     primary_key=True, index=True, insert_default=uuid.uuid4
+    # )
+
+    # published: Mapped[datetime | None] = mapped_column(sa.DateTime)
+    # entry_id: Mapped[str | None] = mapped_column(sa.String, nullable=True)
+    # title: Mapped[str | None] = mapped_column(sa.String, index=True, nullable=True)
+    # summary: Mapped[str | None] = mapped_column(sa.String, nullable=True)
+    # author: Mapped[str | None] = mapped_column(sa.String, index=True, nullable=True)
+    # link: Mapped[str | None] = mapped_column(sa.String, nullable=True)
+
+    title_detail: Mapped["RPILocatorTitleDetailModel"] = relationship(
+        back_populates="entry"
+    )
+
+
+class RPILocatorTitleDetailModelBase(Base, UUIDMixin):
+    __abstract__ = True
+    __tablename__ = "titleDetail"
+
+    type_annotation_map = {uuid.UUID: CompatibleUUID}
+
+    id: Mapped[uuid.UUID] = mapped_column(
+        primary_key=True, index=True, insert_default=uuid.uuid4
+    )
+
+    type: Mapped[str | None] = mapped_column(sa.String, index=True, nullable=True)
+    language: Mapped[str | None] = mapped_column(sa.String, nullable=True)
+    base: Mapped[str | None] = mapped_column(sa.String, nullable=True)
+    value: Mapped[str | None] = mapped_column(sa.String, nullable=True)
+
+
+class RPILocatorTitleDetailModel(RPILocatorTitleDetailModelBase):
+    # __tablename__ = "titleDetail"
+
+    # id: Mapped[uuid.UUID] = mapped_column(
+    #     primary_key=True, index=True, insert_default=uuid.uuid4
+    # )
+
+    # type: Mapped[str | None] = mapped_column(sa.String, index=True, nullable=True)
+    # language: Mapped[str | None] = mapped_column(sa.String, nullable=True)
+    # base: Mapped[str | None] = mapped_column(sa.String, nullable=True)
+    # value: Mapped[str | None] = mapped_column(sa.String, nullable=True)
+
+    entry_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("rpiLocator.id"))
+    entry: Mapped["RPILocatorEntryModel"] = relationship(back_populates="title_detail")

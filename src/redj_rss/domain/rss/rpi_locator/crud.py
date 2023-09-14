@@ -3,7 +3,7 @@ from __future__ import annotations
 import uuid
 
 from .models import RPILocatorEntryModel
-from .schemas import RPILocatorEntry, RPILocatorEntryCreate
+from .schemas import RPILocatorEntry, RPILocatorEntryCreate, RPILocatorFieldDetailCreate
 
 from lib.parse_pydantic_schema import parse_schema
 from loguru import logger as log
@@ -70,7 +70,10 @@ def create(
 
                 log.debug("Dumping schema to dict")
                 dump_schema: dict = parse_schema(schema=obj)
-                new_obj: RPILocatorEntryModel = RPILocatorEntryModel(
+                log.debug(
+                    f"Title detail ({type(dump_schema['title_detail'])}): {dump_schema['title_detail']}"
+                )
+                new_rpilocator_obj: RPILocatorEntryModel = RPILocatorEntryModel(
                     title=dump_schema["title"],
                     author=dump_schema["author"],
                     link=dump_schema["link"],
@@ -79,10 +82,11 @@ def create(
                     summary=dump_schema["summary"],
                 )
 
-                sess.add(new_obj)
+                sess.add(new_rpilocator_obj)
                 sess.commit()
+                sess.refresh(new_rpilocator_obj)
 
-                return new_obj
+                return new_rpilocator_obj
 
     except Exception as exc:
         log.error(

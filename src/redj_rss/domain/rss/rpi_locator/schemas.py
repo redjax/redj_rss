@@ -12,11 +12,22 @@ import pendulum
 
 from pydantic import BaseModel, Field, ValidationError, validator
 
+
 class RPILocatorFieldDetail(BaseModel):
     type: str | None = Field(default="text/plain")
     language: str | None = Field(default=None)
     base: str | None = Field(default=None)
     value: str | None = Field(default=None)
+
+    class Meta:
+        orm_model = "RPILocatorTitleDetail"
+
+
+class RPILocatorFieldDetailCreate(RPILocatorFieldDetail):
+    id: uuid.UUID
+
+    class Config:
+        from_attributes = True
 
 
 class RPILocatorLink(BaseModel):
@@ -71,6 +82,7 @@ class RPILocatorEntryBase(FeedEntryBase):
 
 class RPILocatorEntryCreate(RPILocatorEntryBase):
     id: uuid.UUID
+    title_detail: RPILocatorFieldDetailCreate | None = Field(default=None)
 
     class Config:
         from_attributes = True
