@@ -46,9 +46,9 @@ format = { cmd = "ruff check . --fix" }
 ########################
 
 #  Run main app or script. Launches from app/
-start = { shell = "cd src && pdm run python redj_rss" }
+start = { shell = "pdm run python redj_rss" }
 
-start-dev = { shell = "cd src && pdm run python redj_rss", env = { ENV_FOR_DYNACONF = "dev" } }
+start-dev = { shell = "pdm run python redj_rss", env = { ENV_FOR_DYNACONF = "dev" } }
 
 ###########
 # Alembic #
@@ -62,10 +62,10 @@ alembic-upgrade = { cmd = "alembic upgrade head" }
 
 ## Run migrations
 #  Prompts for a commit message
-alembic-migrate = { shell = "cd src && read -p 'Commit message: ' commit_msg && pdm run alembic revision --autogenerate -m '${commit_msg}'" }
+alembic-migrate = { shell = "read -p 'Commit message: ' commit_msg && pdm run alembic revision --autogenerate -m '${commit_msg}'" }
 
 ## Run full migration, upgrade - commit - revision
-migrations = { shell = "cd src && pdm run alembic upgrade head && read -p 'Commit message: ' commit_msg && pdm run alembic revision --autogenerate -m '${commit_msg}'" }
+migrations = { shell = "pdm run alembic upgrade head && read -p 'Commit message: ' commit_msg && pdm run alembic revision --autogenerate -m '${commit_msg}'" }
 
 ######################
 # Export Requirement #
