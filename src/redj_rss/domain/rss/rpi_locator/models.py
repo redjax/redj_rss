@@ -15,7 +15,6 @@ import sqlalchemy.orm as sa_orm
 from sqlalchemy.orm import Mapped, Session, mapped_column, relationship
 from sqlalchemy.sql import func
 
-
 class UUIDMixin:
     id: Mapped[uuid.UUID] = mapped_column(
         primary_key=True, index=True, insert_default=uuid.uuid4

@@ -1,19 +1,20 @@
-"""${commit_msg}
+"""${commit_msg}.
 
 Revision ID: 8acc9509d8cc
 Revises: 9e504490d833
 Create Date: 2023-09-09 02:35:56.228582
 
 """
+from __future__ import annotations
+
 from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
 
-
 # revision identifiers, used by Alembic.
-revision: str = '8acc9509d8cc'
-down_revision: Union[str, None] = '9e504490d833'
+revision: str = "8acc9509d8cc"
+down_revision: Union[str, None] = "9e504490d833"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

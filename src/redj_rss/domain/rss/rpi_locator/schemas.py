@@ -12,7 +12,6 @@ import pendulum
 
 from pydantic import BaseModel, Field, ValidationError, validator
 
-
 class RPILocatorFieldDetail(BaseModel):
     type: str | None = Field(default="text/plain")
     language: str | None = Field(default=None)

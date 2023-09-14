@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-
 def is_pydantic(obj: object):
     """Check if object is a Pydantic model."""
     return type(obj).__class__.__name__ == "ModelMetaclass"

@@ -1,18 +1,19 @@
-"""${commit_msg}
+"""${commit_msg}.
 
 Revision ID: 17c328a624be
 Revises: 
 Create Date: 2023-09-09 02:31:08.195081
 
 """
+from __future__ import annotations
+
 from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
 
-
 # revision identifiers, used by Alembic.
-revision: str = '17c328a624be'
+revision: str = "17c328a624be"
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None

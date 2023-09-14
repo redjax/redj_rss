@@ -1,19 +1,20 @@
-"""${commit_msg}
+"""${commit_msg}.
 
 Revision ID: f439e51046ef
 Revises: f377b20f368e
 Create Date: 2023-09-09 23:08:16.773861
 
 """
+from __future__ import annotations
+
 from typing import Sequence, Union
 
 from alembic import op
 import sqlalchemy as sa
 
-
 # revision identifiers, used by Alembic.
-revision: str = 'f439e51046ef'
-down_revision: Union[str, None] = 'f377b20f368e'
+revision: str = "f439e51046ef"
+down_revision: Union[str, None] = "f377b20f368e"
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

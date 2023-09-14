@@ -7,7 +7,7 @@ from .schemas import (
     RPILocatorEntryCreate,
     RPILocatorEntryUpdate,
     RPILocatorFieldDetail,
+    RPILocatorFieldDetailCreate,
     RPILocatorLink,
     RPILocatorTag,
-    RPILocatorFieldDetailCreate,
 )
