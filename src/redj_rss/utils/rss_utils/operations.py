@@ -6,7 +6,7 @@ import random
 from typing import Union
 
 from constants import settings
-from dependencies import check_cache_key_exists, get_val, set_val
+from dependencies import check_cache_key_exists, get_val, set_val, set_expire
 import diskcache
 import feedparser
 
@@ -20,6 +20,11 @@ from red_utils.msgpack_utils import (
     msgpack_serialize,
     msgpack_serialize_file,
 )
+
+from lib.parse_pydantic_schema import parse_schema
+
+from red_utils.hash_utils import get_hash_from_str
+
 
 def serialize_feed_res(
     data: feedparser.FeedParserDict = None, name: str = None
@@ -57,7 +62,7 @@ def get_feed(
     url: str = settings.FEED_URL,
     cache: diskcache.Cache = None,
     use_cache: bool = True,
-    cache_expire: int = settings.CACHE_CONF.timeout,
+    cache_expire: int = settings.CACHE_CONF.expire,
 ) -> feedparser.FeedParserDict:
     """Retrieve an RSS feed URL's contents."""
     if not url:
@@ -67,21 +72,28 @@ def get_feed(
         if use_cache:
             raise ValueError("Missing a cache object.")
 
+    if use_cache:
+        cache_key = get_hash_from_str(input_str=url)
+        log.debug(f"Cache key: {cache_key}")
+
     try:
         log.info(f"Getting feed [{url}]")
 
         if use_cache:
             with cache as client:
-                if not check_cache_key_exists(key=url, cache=client):
+                if not check_cache_key_exists(key=cache_key, cache=client):
                     log.debug("Cached: False")
                     _feed: feedparser.FeedParserDict = feedparser.parse(url)
-
                     set_val(
-                        cache=client, key=url, val=_feed.copy(), expire=cache_expire
+                        cache=client,
+                        key=cache_key,
+                        val=dict(_feed),
+                        expire=cache_expire,
                     )
+
                 else:
-                    log.debug(f"Cache: True")
-                    cached_feed = get_val(key=url, cache=client)
+                    log.debug(f"Cached: True")
+                    cached_feed = get_val(key=cache_key, cache=client)
                     _feed: feedparser.FeedParserDict = feedparser.FeedParserDict(
                         **cached_feed
                     )

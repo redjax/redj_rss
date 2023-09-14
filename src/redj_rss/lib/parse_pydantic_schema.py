@@ -1,11 +1,12 @@
 from __future__ import annotations
 
+
 def is_pydantic(obj: object):
     """Check if object is a Pydantic model."""
     return type(obj).__class__.__name__ == "ModelMetaclass"
 
 
-def parse_pydantic_schema(schema):
+def parse_schema(schema):
     """Iterate over pydantic schema & parse nested schemas to a dictionary containing SQLAlchemy models.
 
     Only works if nested schemas have specified the Meta.orm_model. Make sure to add this line to Pydantic
