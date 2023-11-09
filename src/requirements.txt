@@ -22,7 +22,7 @@ msgpack==1.0.5
 numpy==1.25.2
 pendulum==2.1.2
 polars==0.19.2
-pyarrow==13.0.0
+pyarrow==14.0.1
 pydantic==2.3.0
 pydantic-core==2.6.3
 python-dateutil==2.8.2
